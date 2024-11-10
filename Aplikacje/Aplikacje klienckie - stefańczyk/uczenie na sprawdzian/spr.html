@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        * {
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        table,
+        tr,
+        td {
+            border: 1px solid black;
+        }
+
+        div {
+            border-radius: 25px;
+        }
+    </style>
+    <script src="jq.js"></script>
+    <script>
+        $(document).ready(() => {
+            const tab = [
+                {
+                    type: "inteligencja interpersonalna",
+                    c1: "f6ac55",
+                    c2: "fa8a02",
+                    size: 90,
+                },
+                {
+                    type: "inteligencja kinestetyczna",
+                    c1: "3dc6f4",
+                    c2: "0ebaea",
+                    size: 80,
+                },
+                {
+                    type: "inteligencja muzyczna",
+                    c1: "abd66d",
+                    c2: "9fc25e",
+                    size: 70,
+                },
+                {
+                    type: "inteligencja lingwistyczno-językowa",
+                    c1: "f05156",
+                    c2: "ff4b4c",
+                    size: 60,
+                },
+                {
+                    type: "inteligencja wizualno-przestrzenna",
+                    c1: "f8a0c6",
+                    c2: "ff79aa",
+                    size: 70,
+                },
+                {
+                    type: "inteligencja logiczno-matematyczna",
+                    c1: "a06db0",
+                    c2: "984190",
+                    size: 80,
+                },
+                {
+                    type: "inteligencja intrapersonalna",
+                    c1: "fdd542",
+                    c2: "f5c300",
+                    size: 90,
+                },
+            ];
+
+            let values = [90, 80, 70, 60, 70, 80, 90];
+            const srednia = Math.round(eval(values.join("+")) / 7);
+
+            for (let i = 0; i <= tab.length; i++) {
+                const tr = $("<tr>");
+                const td = $("<td>");
+                const td2 = $("<td>");
+                const td3 = $("<td>");
+                const slieder = $("<div>");
+                const div = $("<div>");
+                const div2 = $("<div>");
+                if (i < tab.length) {
+                    slieder
+                        .css("height", 40)
+                        .css("width", 540)
+                        .css("background", "gray")
+                        .on("mouseleave", () => {
+                            $(window).off("mousemove");
+                        })
+                        .on("mouseup", () => {
+                            $(window).off("mousemove");
+                        });
+                    div
+                        .css("width", (500 / 100) * tab[i].size + 40)
+                        .css("height", 40)
+                        .css("background", `#${tab[i].c1}`)
+                        .css("position", "relative");
+                    div2
+                        .css("width", 40)
+                        .css("height", 40)
+                        .css("background", `#${tab[i].c2}`)
+                        .css("position", "absolute")
+                        .css("left", (500 / 100) * tab[i].size)
+                        .text(tab[i].size)
+                        .on("mousedown", () => {
+                            $(window).on("mousemove", (e) => {
+                                const position = Math.round(
+                                    Math.max(
+                                        0,
+                                        Math.min(
+                                            (500 / 100) * tab[i].size,
+                                            e.clientX - div.offset().left
+                                        )
+                                    )
+                                );
+                                const procent = Math.round((100 / 500) * position);
+                                values[i] = procent;
+
+                                $("#srednia")
+                                    .css("left", `${Math.round(eval(values.join("+")) / 7)}%`)
+                                    .text(Math.round(eval(values.join("+")) / 7));
+                                div2.css("left", position).text(procent);
+                                td3.text(procent);
+                                console.log(srednia);
+                            });
+                        });
+                    div.append(div2);
+                    slieder.append(div);
+                    td.text(tab[i].type);
+                    td2.append(slieder);
+                    td3.text(tab[i].size);
+                    tr.append(td, td2, td3);
+                } else {
+                    div
+                        .css("height", 80)
+                        .css("width", 80)
+                        .css("background", "white")
+                        .css("border-radius", 40)
+                        .css("position", "absolute")
+                        .css("left", `${Math.round(eval(values.join("+")) / 7)}%`)
+                        .attr("id", "srednia")
+                        .text(Math.round(eval(values.join("+")) / 7));
+                    slieder
+                        .css("height", 80)
+                        .css("width", "full")
+                        .css("background", "red")
+                        .css("border-radius", 40)
+                        .css("position", "relative");
+                    slieder.append(div);
+                    td.append(slieder);
+                    td.attr("colspan", 3);
+                    tr.append(td);
+                }
+
+                $("table").append(tr);
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <table></table>
+</body>
+
+</html>

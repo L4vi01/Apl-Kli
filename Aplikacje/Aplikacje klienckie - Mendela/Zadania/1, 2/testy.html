@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zadanie 3</title>
+</head>
+
+<body>
+    <script>
+        // Zadanie 3a
+        const inputValue = prompt("Podaj liczbę:");
+        const number = parseInt(inputValue);
+        if (number > 0) {
+            const result = "X".repeat(Math.round(number));
+            document.write(result);
+        } else {
+            document.write("Podany znak nie jest liczbą.");
+        }
+        document.write("<hr>");
+
+        // Zadanie 3b
+        for (let i = 0; i < number; i++) {
+            if (i === 0 || i === number - 1) {
+                document.write("X".repeat(number) + "<br>");
+            } else {
+                document.write("X" + "&nbsp;".repeat((number - 2) * 3) + "X<br>");
+            }
+        }
+        document.write("<hr>");
+
+        // Zadanie 3c
+        for (let i = 0; i < number; i++) {
+            const spacesBefore = "&nbsp;".repeat((number - i - 1) * 3);
+            if (i === 0 || i === number - 1) {
+                document.write(spacesBefore + "X".repeat(i + 1) + "<br>");
+            } else {
+                const innerSpaces = "&nbsp;".repeat((i - 1) * 3);
+                document.write(spacesBefore + "X" + innerSpaces + "X<br>");
+            }
+        }
+        document.write("<hr>");
+
+        // Zadanie 3d
+        for (let i = 1; i <= number; i++) {
+            let row = "";
+            for (let j = 1; j <= i; j++) {
+                row += j;
+            }
+            document.write(row + "<br>");
+        }
+        document.write("<hr>");
+
+        // Zadanie 3e
+        for (let i = 1; i <= number; i++) {
+            let row = "";
+            for (let j = i; j >= 1; j--) {
+                row += j;
+            }
+            document.write(row + "<br>");
+        }
+        document.write("<hr>");
+
+        // Zadanie 3f
+        let factorial = 1;
+        for (let i = number; i > 0; i--) {
+            factorial *= i;
+        }
+        document.write(factorial);
+        document.write("<hr>");
+
+        // Zadanie 3g
+        let evenSum = 0;
+        for (let i = 0; i <= number; i += 2) {
+            evenSum += i;
+        }
+        document.write(evenSum);
+        document.write("<hr>");
+
+        // Zadanie 3h
+        let isPrime = true;
+        if (number === 1) {
+            isPrime = false;
+        } else {
+            for (let i = 2; i <= Math.sqrt(number); i++) {
+                if (number % i === 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+        }
+        alert(isPrime ? "Liczba jest pierwsza" : "Liczba nie jest pierwsza");
+
+    </script>
+</body>
+
+</html>

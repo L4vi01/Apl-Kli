@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="jq.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            let size = 5
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    let div = $("<div>")
+                        .addClass("elem")
+                        .css("left", i * 53)
+                        .css("top", j * 53)
+                        .on("click", function () {
+                            $(this).css("background", "lightcoral")
+                            tab.push({
+                                x: $(this).css("left"),
+                                y: $(this).css("top")
+                            })
+                            console.clear()
+                            console.table(tab);
+                        })
+                    $("#main").append(div)
+                }
+            }
+            $("#bt3").on("click", function () {
+                $(".elem").css("background", "lightgrey")
+
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <h2>Zadanie: Labirynt - tablice obiektów</h2>
+    <div id="buttons">
+        <button id="bt1">START GAME</button>
+        <button id="bt2">NEXT MOVE</button>
+        <button id="bt3">RESET GAME</button>
+    </div>
+    <div id="main"></div>
+    <div id="player1"></div>
+    <div id="player2"></div>
+</body>
+
+</html>

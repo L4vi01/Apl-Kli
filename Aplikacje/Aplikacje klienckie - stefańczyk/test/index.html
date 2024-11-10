@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jq.js"></script>
+    <style>
+        table td tr {
+            border: 1px solid black;
+
+        }
+
+        td {
+            padding: auto;
+            margin: auto;
+            width: 300px;
+            height: 40px;
+            border: 1px dotted black;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        #td2 {
+            width: 400px;
+        }
+
+        .td3 {
+            width: 50px;
+        }
+
+        .suwak {
+            height: 20px;
+            border-radius: 10px;
+            text-align: right;
+        }
+
+        .kolo {
+            width: 20px;
+            height: 20px;
+            border-radius: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <table id="t1"></table>
+    <script>
+        $(document).ready(function () {
+            const tab = [
+                { type: "inteligencja interpersonalna", c1: "f6ac55", c2: "fa8a02", size: 90 },
+                { type: "inteligencja kinestetyczna", c1: "3dc6f4", c2: "0ebaea", size: 80 },
+                { type: "inteligencja muzyczna", c1: "abd66d", c2: "9fc25e", size: 70 },
+                { type: "inteligencja lingwistyczno-językowa", c1: "f05156", c2: "ff4b4c", size: 60 },
+                { type: "inteligencja wizualno-przestrzenna", c1: "f8a0c6", c2: "ff79aa", size: 70 },
+                { type: "inteligencja logiczno-matematyczna", c1: "a06db0", c2: "984190", size: 80 },
+                { type: "inteligencja intrapersonalna", c1: "fdd542", c2: "f5c300", size: 90 },
+            ]
+
+            for (let i = 0; i < tab.length; i++) {
+                let td = $(`<td>${tab[i].type}</td>
+                <td id= "td2"><div class="suwak" style="background-color:#${tab[i].c2};width:${tab[i].size}%";>
+                    <div class="kolo" style= "background-color:#${tab[i].c1}; margin-left:${tab[i].size}%; ">${tab[i].size}</div></div>
+                <td class="td3">${tab[i].size} </td>`)
+                let tr = $("<tr>")
+                tr.append(td)
+                $("#t1").append(tr)
+            }
+            $(".suwak").on("mousedown", function (e) {
+                let zmiana = true
+                let x = Math.round(e.clientX - $(".suwak").offset().left)
+                if (zmiana == true) {
+                    $(this).css("width", x)
+                    $(this).html(x / 4)
+                }
+
+            })
+            let s
+            s = (tab[0].size + tab[1].size + tab[2].size + tab[3].size + tab[4].size + tab[5].size + tab[6].size) / 7
+            let tr2 = $("<tr>")
+            let td2 = $(`<td colspan=3>Moja srednia inteligencja: ${s}</td>`)
+            tr2.append(td2)
+            $("#t1").append(tr2)
+        })
+    </script>
+</body>
+
+</html>

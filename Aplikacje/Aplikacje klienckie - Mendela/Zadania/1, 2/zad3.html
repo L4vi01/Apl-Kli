@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zadanie 3</title>
+</head>
+
+<body>
+    <script>
+        // 3a - XXXXX
+        let input = prompt("Podaj liczbę:");
+        let count = parseInt(input);
+        if (count > 0) {
+            let run = Math.round(count);
+            let wynik = "X".repeat(run);
+            document.write(wynik);
+        } else {
+            document.write("Podany znak nie jest liczbą.");
+        }
+        document.write("<hr>");
+        // 3b - Kwadrat z liter 'X'
+        for (let i = 1; i <= count; i++) {
+            if (i !== 1 && i !== count) {
+                document.write("X" + "&nbsp;".repeat((count - 2) * 3) + "X<br>");
+            } else {
+                document.write("X".repeat(count) + "<br>");
+            }
+        }
+        document.write("<hr>");
+        // 3c - Piramida
+        for (let i = 1; i <= count; i++) {
+            if (i !== 1 && i !== count) {
+                document.write(
+                    "&nbsp;".repeat((count - i) * 3) +
+                    "X" +
+                    "&nbsp;".repeat((i - 2) * 3) +
+                    "X<br>"
+                );
+            } else {
+                document.write(
+                    "&nbsp;".repeat((count - i) * 3) + "X".repeat(i) + "<br>"
+                );
+            }
+        }
+        document.write("<hr>");
+        // 3d - Wzór 1 12 123 1234
+        for (let i = 1; i <= count; i++) {
+            for (let y = 1; y <= i; y++) {
+                document.write(y);
+            }
+            document.write("<br>");
+        }
+        document.write("<hr>");
+        // 3e - Wzór 1 21 321 4321
+        for (let i = 1; i <= count; i++) {
+            for (let y = i; y >= 1; y--) {
+                document.write(y);
+            }
+            document.write("<br>");
+        }
+        document.write("<hr>");
+        // 3f - silnię podanej liczby
+
+        let wynik = 1;
+        for (let i = count; i >= 1; i--) {
+            wynik = wynik * i;
+        }
+        document.write(wynik);
+        document.write("<hr>");
+        // 3g - sumę liczb parzystych w zakresie 0 do podanej lczby
+        let sum = 0;
+        for (let i = 0; i <= count; i++) {
+            if (i % 2 === 0) {
+                sum += i;
+            }
+        }
+        document.write(sum);
+        document.write("<hr>");
+        // 3h -  w oknie dialogowym informację czy podana liczba jest pierwsza
+        let test = true;
+        for (let i = 2; i <= count / 2; i++) {
+            if (count % i === 0) {
+                test = false;
+            }
+
+            if (test) {
+                alert("Liczba jest pierwsza");
+            } else {
+                alert("liczba nie jest pierwsza");
+            }
+        }
+    </script>
+</body>
+
+</html>

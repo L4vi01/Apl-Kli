@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zadanie 4</title>
+</head>
+
+<body>
+    <script>
+        const regon = prompt("Podaj regon:");
+        let suma = 0;
+        function validRegon9() {
+            const wagi = [8, 9, 2, 3, 4, 5, 6, 7];
+            let suma9 = 0;
+
+            for (let i = 0; i < 8; i++) {
+                suma9 += regon[i] * wagi[i];
+            }
+            return suma9 % 11 === parseInt(regon[8]);
+        }
+        function validRegon14() {
+            const wagi14 = [2, 4, 8, 5, 0, 9, 7, 3, 6, 1, 2, 4, 8];
+            for (let i = 0; i < 13; i++) {
+                suma += regon[i] * wagi14[i];
+            }
+            return suma % 11 === parseInt(regon[13]);
+        }
+        if (regon.length === 9) {
+            if (validRegon9()) {
+                document.write(`REGON jest poprawny: ${regon}`);
+            } else {
+                document.write(`REGON jest błędny: ${regon}`);
+            }
+        } else if (regon.length === 14) {
+            if (validRegon14()) {
+                document.write(`REGON jest poprawny: ${regon}`);
+            } else {
+                document.write(`REGON jest błędny: ${regon}`);
+            }
+        } else {
+            document.write(`REGON jest błędny: ${regon}`);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inteligencje</title>
+    <script src="jq.js"></script>
+    <style>
+        /* Stylowanie tabeli i komórek */
+        table td {
+            border: 1px dotted black;
+            width: 300px;
+            height: 40px;
+            text-align: center;
+        }
+
+        .suwak {
+            height: 20px;
+            /* Wysokość suwaka */
+            background-color: lightgrey;
+            /* Kolor suwaka */
+            border-radius: 10px;
+            /* Zaokrąglenie rogów */
+            position: relative;
+            /* Umożliwia pozycjonowanie kółka wewnątrz suwaka */
+            margin: 10px 0;
+            /* Odstęp nad i pod suwakiem */
+            width: 100%;
+            /* Domyślna szerokość */
+        }
+
+        .kolo {
+            width: 20px;
+            /* Szerokość kółka */
+            height: 20px;
+            /* Wysokość kółka */
+            border-radius: 100%;
+            /* Sprawia, że kółko ma okrągły kształt */
+            background-color: red;
+            /* Kolor kółka */
+            position: absolute;
+            /* Pozycjonowanie kółka względem suwaka */
+            top: -5px;
+            /* Wysunięcie kółka nad suwak */
+        }
+    </style>
+</head>
+
+<body>
+    <table id="tabela"></table> <!-- Pusta tabela, do której będziemy dodawać dane -->
+    <script>
+        $(document).ready(function () {
+            // Dane o różnych inteligencjach
+            const dane = [
+                { typ: "Inteligencja interpersonalna", c1: "f6ac55", c2: "fa8a02", size: 90 },
+                { typ: "Inteligencja kinestetyczna", c1: "3dc6f4", c2: "0ebaea", size: 80 },
+                { typ: "Inteligencja muzyczna", c1: "abd66d", c2: "9fc25e", size: 70 },
+                { typ: "Inteligencja lingwistyczno-językowa", c1: "f05156", c2: "ff4b4c", size: 60 },
+                { typ: "Inteligencja wizualno-przestrzenna", c1: "f8a0c6", c2: "ff79aa", size: 70 },
+                { typ: "Inteligencja logiczno-matematyczna", c1: "a06db0", c2: "984190", size: 80 },
+                { typ: "Inteligencja intrapersonalna", c1: "fdd542", c2: "f5c300", size: 90 },
+            ];
+
+            // Tworzenie tabeli z danymi
+            for (let i = 0; i < dane.length; i++) {
+                let wiersz = `
+                    <tr>
+                        <td>${dane[i].typ}</td>
+                        <td>
+                            <div class="suwak" style="background-color:#${dane[i].c2};">
+                                <div class="kolo" style="background-color:#${dane[i].c1}; left:${dane[i].size}%;"></div>
+                            </div>
+                        </td>
+                        <td class="rozmiar">${dane[i].size}</td>
+                    </tr>
+                `;
+                $("#tabela").append(wiersz); // Dodanie wiersza do tabeli
+            }
+
+            // Funkcjonalność suwaków
+            $(".suwak").on("mousedown", function (e) {
+                const suwak = $(this); // Zapisujemy odwołanie do suwaka
+                const kolo = suwak.find(".kolo"); // Zapisujemy odwołanie do kółka
+                const poczatkowaPozycjaX = e.pageX; // Zapisujemy początkową pozycję myszy
+                const poczatkowaSzerokosc = suwak.width(); // Zapisujemy początkową szerokość
+
+                $(document).on("mousemove", function (event) {
+                    // Obliczanie nowej szerokości suwaka
+                    let zmiana = event.pageX - poczatkowaPozycjaX; // Różnica w położeniu
+                    let nowaSzerokosc = Math.round(poczatkowaSzerokosc + zmiana); // Nowa szerokość suwaka
+                    nowaSzerokosc = Math.min(300, Math.max(0, nowaSzerokosc)); // Ustawienie maksymalnej i minimalnej szerokości
+                    const procent = (nowaSzerokosc / 300) * 100; // Obliczanie procentu szerokości
+
+                    // Ustawienie szerokości suwaka i pozycji kółka
+                    suwak.css("width", procent + "%");
+                    kolo.css("left", procent + "%");
+
+                    // Aktualizacja wartości w trzeciej kolumnie
+                    $(".rozmiar").eq(suwak.parent().parent().index()).text(Math.round(procent));
+                });
+
+                // Kończenie ruchu myszy
+                $(document).on("mouseup", function () {
+                    $(document).off("mousemove"); // Zatrzymujemy ruch myszy
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

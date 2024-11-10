@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zadanie 1</title>
+</head>
+
+<body>
+    <script>
+        // 1a - wytłuszczony napis "Witaj JavaScript""
+        let section1a = document.createElement("div");
+        section1a.innerHTML = "<b>Witaj JavaScript</b>";
+        document.body.append(section1a);
+
+        // 1b - jedna pod drugą liczby z zakresu: <-22;22)
+        let section1b = document.createElement("div");
+        section1b.innerHTML = "<h3>1b - jedna pod drugą liczby z zakresu: <-22;22)</h3>";
+        for (let i = -22; i < 22; i++) {
+            let numberDiv = document.createElement("div");
+            numberDiv.textContent = i;
+            section1b.append(numberDiv);
+        }
+        document.body.append(section1b);
+
+        // 1c - malejąco co piątą liczbę (oddzielone spacjami) z zakresu: (-15;55>
+        let section1c = document.createElement("div");
+        section1c.innerHTML = "<h3>1c - malejąco co piątą liczbę (oddzielone spacjami) z zakresu: (-15;55></h3>";
+        let numbersC = "";
+        for (let i = 55; i > -15; i -= 5) {
+            numbersC += i + " ";
+        }
+        section1c.innerHTML += "<div>" + numbersC.trim() + "</div>";
+        document.body.append(section1c);
+
+        // 1d - malejąco liczby z zakresu: <10;40> \ (15;25)
+        let section1d = document.createElement("div");
+        section1d.innerHTML = "<h3>1d - malejąco liczby z zakresu: <10;40> \ (15;25)</h3>";
+        for (let i = 40; i >= 10; i--) {
+            if (i <= 15 || i >= 25) {
+                let numberDiv = document.createElement("div");
+                numberDiv.textContent = i;
+                section1d.append(numberDiv);
+            }
+        }
+        document.body.append(section1d);
+
+    </script>
+</body>
+
+</html>

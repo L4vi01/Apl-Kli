@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let zdanie = prompt("Podaj zdanie:");
+        const samogloski = "aeiouyąęóAEIOUYĄĘÓ";
+        let wynik = "";
+        for (let i = 0; i < zdanie.length; i++) {
+            let znak = zdanie.charAt(i);
+            if (samogloski.includes(znak)) {
+                wynik += `<b style="color:red">${znak}</b>`;
+            } else {
+                wynik += znak;
+            }
+        }
+        document.write(wynik);
+    </script>
+</body>
+
+</html>

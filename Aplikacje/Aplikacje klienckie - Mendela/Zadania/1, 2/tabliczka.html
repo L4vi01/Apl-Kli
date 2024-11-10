@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabliczka mnożenia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333333;
+            color: #cccccc;
+            margin: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: auto;
+            margin: 20px auto;
+        }
+
+        th,
+        td {
+            border: 1px solid #555555;
+            text-align: center;
+            padding: 6px 10px;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #444444;
+            color: #ffffff;
+        }
+
+        td {
+            background-color: #555555;
+            color: #eeeeee;
+        }
+
+        .diagonal {
+            background-color: #222222;
+        }
+
+        .first-column {
+            background-color: #444444;
+            color: #ffffff;
+        }
+
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Tabliczka Mnożenia</h2>
+    <div id="table-container"></div>
+    <script>
+        let input = prompt("Podaj liczbę:");
+        let count = parseInt(input);
+
+        // 3i - Tabliczka mnożenia
+        let container = document.getElementById("table-container");
+        container.innerHTML = "";
+
+        let table = document.createElement("table");
+        let headerRow = document.createElement("tr");
+
+        let emptyHeader = document.createElement("th");
+        headerRow.append(emptyHeader);
+
+        for (let i = 1; i <= count; i++) {
+            let th = document.createElement("th");
+            th.textContent = i;
+            headerRow.append(th);
+        }
+        table.append(headerRow);
+
+        for (let i = 1; i <= count; i++) {
+            let row = document.createElement("tr");
+
+            let rowHeader = document.createElement("th");
+            rowHeader.textContent = i;
+            rowHeader.classList.add("first-column");
+            row.append(rowHeader);
+
+            for (let j = 1; j <= count; j++) {
+                let cell = document.createElement("td");
+                let value = i * j;
+                cell.textContent = value;
+
+                if (i === j) {
+                    cell.classList.add("diagonal");
+                }
+
+                row.append(cell);
+            }
+            table.append(row);
+        }
+
+        container.append(table);
+    </script>
+</body>
+
+</html>

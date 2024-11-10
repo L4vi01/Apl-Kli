@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inteligencja</title>
+    <script src="jq.js"></script>
+    <style>
+        table,
+        td {
+            border: 1px solid black;
+        }
+
+        td {
+            width: 300px;
+            height: 40px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .suwak {
+            height: 20px;
+            border-radius: 10px;
+            text-align: right;
+            position: relative;
+        }
+
+        .kolo {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+
+        }
+    </style>
+</head>
+
+<body>
+    <table id="t1"></table>
+
+    <script>
+        $(document).ready(function () {
+            const tab = [
+                { type: "inteligencja interpersonalna", c1: "f6ac55", c2: "fa8a02", size: 90 },
+                { type: "inteligencja kinestetyczna", c1: "3dc6f4", c2: "0ebaea", size: 80 },
+                { type: "inteligencja muzyczna", c1: "abd66d", c2: "9fc25e", size: 70 },
+                { type: "inteligencja lingwistyczno-językowa", c1: "f05156", c2: "ff4b4c", size: 60 },
+                { type: "inteligencja wizualno-przestrzenna", c1: "f8a0c6", c2: "ff79aa", size: 70 },
+                { type: "inteligencja logiczno-matematyczna", c1: "a06db0", c2: "984190", size: 80 },
+                { type: "inteligencja intrapersonalna", c1: "fdd542", c2: "f5c300", size: 90 },
+            ];
+
+            // Funkcja do tworzenia wierszy
+            tab.forEach((item, index) => {
+                $("#t1").append(`
+                    <tr>
+                        <td>${item.type}</td>
+                        <td>
+                            <div class="suwak" data-index="${index}" style="background-color:#${item.c2}; width:${item.size}%;">
+                                <div class="kolo" style="background-color:#${item.c1}; margin-left:${item.size}%; ">${item.size}</div>
+                            </div>
+                        </td>
+                        <td class="size-display">${item.size}</td>
+                    </tr>
+                `);
+            });
+
+            // Funkcja do aktualizacji średniej
+            function updateAverage() {
+                const average = Math.round($(".size-display").toArray().reduce((acc, el) => acc + parseInt($(el).text()), 0) / tab.length);
+                $("#average-display").text(`Moja średnia inteligencja: ${average}`);
+            }
+
+            // Event mousedown i mousemove dla suwaków
+            $(".suwak").on("mousedown", function (e) {
+                const suwak = $(this);
+                $(document).on("mousemove.suwak", function (e) {
+                    const newWidth = Math.min(Math.max(0, e.pageX - suwak.offset().left), 300); // ograniczenie zakresu szerokości
+                    const newSize = Math.round(newWidth / 3); // przeliczenie na procenty
+                    suwak.css("width", `${newSize}%`).find(".kolo").css("margin-left", `${newSize}%`).text(newSize);
+                    suwak.closest("tr").find(".size-display").text(newSize); // aktualizacja wartości po prawej
+                    updateAverage(); // aktualizacja średniej
+                }).on("mouseup", function () {
+                    $(document).off("mousemove.suwak");
+                });
+            });
+
+            // Wyświetlanie średniej
+            $("#t1").append(`<tr><td colspan="3" id="average-display">Moja średnia inteligencja: ${Math.round(tab.reduce((acc, item) => acc + item.size, 0) / tab.length)}</td></tr>`);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let inputTablica = prompt("Podaj tablicę w formacie [1,2,3,...]:", "[1,2,3,4,5]");
+        let tablica = eval(inputTablica);
+        let input = prompt("Wpisz kierunek i liczbę przesunięć (np. p1 lub l3):");
+        let kierunek = input[0];
+        let liczbaPrzesuniec = parseInt(input.substring(1));
+        function przesunLewo(array, liczba) {
+            for (let i = 0; i < liczba; i++) {
+                array.push(array.shift());
+            }
+            return array;
+        }
+        function przesunPrawo(array, liczba) {
+            for (let i = 0; i < liczba; i++) {
+                array.unshift(array.pop());
+            }
+            return array;
+        }
+        if (kierunek == "l") {
+            console.log("Tablica po przesunięciu w lewo:", przesunLewo(tablica, liczbaPrzesuniec));
+        } else if (kierunek == "p") {
+            console.log("Tablica po przesunięciu w prawo:", przesunPrawo(tablica, liczbaPrzesuniec));
+        } else {
+            console.log("Podano nieprawidłowy kierunek.");
+        }
+    </script>
+</body>
+
+</html>

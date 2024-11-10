@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* To jest test. Sprawdź ten test, test. */
+        let tekst = prompt("Wpisz tekst: ");
+        let szukaneSlowo = prompt("Czego szukasz: ");
+        let kropka = szukaneSlowo + ".";
+        let przecinek = szukaneSlowo + ",";
+        let wynik = tekst.split(" ").map(slowo => {
+            if (slowo.toLowerCase() == szukaneSlowo.toLowerCase() || slowo.toLowerCase() == kropka.toLowerCase() || slowo.toLowerCase() == przecinek.toLowerCase()) {
+                return `<u>${slowo}</u>`;
+            }
+            return slowo;
+        }).join(" ");
+
+        document.write(wynik);
+        console.log(wynik);
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #353535;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam quia pariatur voluptatibus recusandae iste ratione maiores. Ex et explicabo eaque velit asperiores nobis quisquam sit iste inventore, voluptatem voluptate amet! -->
+    <script>
+        /* To jest test. Sprawdź ten test, test. */
+        let tekst = prompt("Podaj tekst:");
+        let slowa = tekst.toLowerCase().replace(/[.,]/g, "").split(" ");
+        let liczniki = {};
+
+        for (let i = 0; i < slowa.length; i++) {
+            let slowo = slowa[i];
+            if (liczniki[slowo]) {
+                liczniki[slowo]++;
+            } else {
+                liczniki[slowo] = 1;
+            }
+        }
+
+        let wynik = [];
+        for (let slowo in liczniki) {
+            wynik.push([slowo, liczniki[slowo]]);
+        }
+
+        for (let i = 0; i < wynik.length; i++) {
+            for (let j = i + 1; j < wynik.length; j++) {
+                if (wynik[i][1] < wynik[j][1]) {
+                    let temp = wynik[i];
+                    wynik[i] = wynik[j];
+                    wynik[j] = temp;
+                }
+            }
+        }
+
+        function losowyKolor() {
+            const kolory = ["red", "green", "blue", "purple", "orange", "yellow", "pink", "brown"];
+            let losowyIndex = Math.floor(Math.random() * kolory.length);
+            return kolory[losowyIndex];
+        }
+
+        let kolory = [];
+        for (let i = 0; i < Math.ceil(wynik.length / 5); i++) {
+            kolory.push(losowyKolor());
+        }
+
+        for (let i = 0; i < wynik.length; i++) {
+            let kolor = kolory[Math.floor(i / 5)];
+
+            document.write(`<span style="color:${kolor}">${wynik[i][0]}: ${wynik[i][1]}</span><br>`);
+        }
+    </script>
+</body>
+
+</html>

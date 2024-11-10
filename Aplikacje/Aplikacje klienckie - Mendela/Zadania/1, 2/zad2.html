@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zadanie 2</title>
+</head>
+
+<body>
+    <script>
+        // 2a - liczby nieparzyste z przedziału <-40;40) bez <3;30)
+        console.log("zadanie2a")
+        for (let i = -40; i < 40; i++) {
+            if (i % 2 !== 0 && (i < 3 || i >= 30)) {
+                console.log(i);
+            }
+        }
+
+
+        // 2b - liczby parzyste z przedziału <-20;20) bez (5;10)
+        console.log("zadanie2b")
+        for (let i = -20; i < 20; i++) {
+            if (i % 2 === 0 && (i <= 5 || i >= 10)) {
+                console.log(i);
+            }
+        }
+
+        // 2c - liczby podzielne przez 7 z przedziału <-100;41) bez (-28;14)
+        console.log("zadanie2c")
+        for (let i = -100; i < 41; i++) {
+            if (i % 7 === 0 && (i <= -28 || i >= 14)) {
+                console.log(i);
+            }
+        }
+
+    </script>
+</body>
+
+</html>
