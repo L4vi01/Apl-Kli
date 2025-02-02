@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="../../css/lessons.css" />
+    <script>
+      const CardComponent = {
+        template: "#cardTemplate",
+        data() {
+          return {
+            x: parseInt(this.val),
+          };
+        },
+        props: ["val", "prop", "funcProp"],
+        methods: {
+          add(v) {
+            this.x += v;
+          },
+          send() {
+            this.funcProp({
+              name: this.prop,
+              value: this.x,
+            });
+          },
+        },
+      };
+
+      let app;
+      function init() {
+        app = Vue.createApp({
+          data() {
+            return {
+              title: "Components",
+              array: [
+                { id: 1, name: "speed", val: 40 },
+                { id: 2, name: "fuel", val: 70 },
+                { id: 3, name: "CO2", val: 20 },
+              ],
+              values: [],
+            };
+          },
+          methods: {
+            append(data) {
+              this.values.push(data);
+            },
+          },
+          components: {
+            "card-component": CardComponent,
+          },
+        }).mount("#app");
+      }
+    </script>
+  </head>
+  <body onload="init()">
+    <template id="cardTemplate">
+      <div class="card">
+        <h3>child component</h3>
+        <h2>{{prop}}</h2>
+        <p>{{x}}</p>
+        <button @click="add(10)">+ 10</button>
+        <button @click="add(-10)">- 10</button>
+        <button @click="add(1)">+ 1</button>
+        <button @click="add(-1)">- 1</button>
+        <button @click="send()">send</button>
+      </div>
+    </template>
+
+    <div id="app">
+      <div>
+        <p>{{val}}</p>
+        <div>
+          <card-component
+            v-for="item in array"
+            v-bind:prop="item.name"
+            v-bind:val="item.val"
+            v-bind:func-prop="append"
+          ></card-component>
+        </div>
+      </div>
+      <pre>{{JSON.stringify(values, null,5)}}</pre>
+    </div>
+  </body>
+</html>

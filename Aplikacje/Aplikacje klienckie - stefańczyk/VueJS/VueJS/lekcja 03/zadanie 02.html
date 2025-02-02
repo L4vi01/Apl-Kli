@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        h1 {
+            color: red;
+        }
+
+        p {
+            color: blue;
+        }
+
+        #lewa {
+            float: left;
+            margin-right: 400px;
+        }
+
+        button {
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>02. Events</h1>
+        <button v-on:click="showElement">{{text}}</button>
+        <h3 class="show" v-show="show">element</h3>
+    </div>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    show: true,
+                    text: "ukryj",
+                }
+            },
+            methods: {
+                showElement() {
+                    if (this.show == false) {
+                        this.show = true
+                    } else {
+                        this.show = false
+                    }
+                    console.log(this.show);
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+
+</html>

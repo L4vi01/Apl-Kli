@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Formularz zakupowy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        div {
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Dodaj do koszyka</h1>
+
+        <!-- Lista produktów -->
+        <h2>Produkty:</h2>
+        <div v-for="product in products" :key="product">
+            <label>
+                <input type="checkbox" v-model="selectedProducts" :value="product"> {{ product }}
+            </label>
+        </div>
+
+        <!-- Sposób dostawy -->
+        <h2>Sposób dostawy:</h2>
+        <div v-for="(option, index) in deliveryOptions" :key="index">
+            <label>
+                <input type="radio" name="delivery" v-model="selectedDelivery" :value="option"> {{ option }}
+            </label>
+        </div>
+
+        <!-- Metoda płatności -->
+        <h2>Metoda płatności:</h2>
+        <div v-for="(method, index) in paymentMethods" :key="index">
+            <label>
+                <input type="radio" name="payment" v-model="selectedPayment" :value="method"> {{ method }}
+            </label>
+        </div>
+
+        <!-- Zgoda na przetwarzanie danych -->
+        <label>
+            <input type="checkbox" v-model="isConfirmed"> Potwierdzam zgodność danych podanych w formularzu kontaktowym
+        </label>
+
+        <!-- Przycisk wysyłania formularza -->
+        <button :disabled="!canSubmit" @click="submitForm">Wyślij</button>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    products: ["Myszka", "Laptop", "Komputer", "Monitor", "Głośniki", "Telefon", "Tablet", "Kabel"],
+                    deliveryOptions: ["Kurier DPD", "InPost", "Paczkomaty", "Poczta Polska", "Osobiście"],
+                    paymentMethods: ["blik", "paypal", "google pay", "płatność kartą", "szybki przelew"],
+                    selectedProducts: [],
+                    selectedDelivery: null,
+                    selectedPayment: null,
+                    isConfirmed: false
+                };
+            },
+            computed: {
+                canSubmit() {
+                    return this.selectedProducts.length > 0 &&
+                        this.selectedDelivery &&
+                        this.selectedPayment &&
+                        this.isConfirmed;
+                }
+            },
+            created() {
+                console.log("created", new Date().getTime());
+
+                // Ustaw domyślne wartości po stworzeniu komponentu
+                this.selectedDelivery = "Paczkomaty";
+                this.selectedPayment = "Szybki przelew";
+            },
+            methods: {
+                submitForm() {
+                    alert("Formularz został wysłany!");
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

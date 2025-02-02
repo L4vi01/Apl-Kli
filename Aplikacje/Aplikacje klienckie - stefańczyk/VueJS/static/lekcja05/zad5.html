@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vue.js Props Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="updateProps">Click to Change Props</button>
+        <child-component v-for="(component, index) in 3" :key="index" :headerProp="header" :firstnameProp="firstName"
+            :ageProp="age"></child-component>
+    </div>
+
+    <script>
+        Vue.component('child-component', {
+            props: ['headerProp', 'firstnameProp', 'ageProp'],
+            template: `
+                <div>
+                    <h1>{{ headerProp }}</h1>
+                    <p>Imię: {{ firstnameProp }}</p>
+                    <p>Wiek: {{ ageProp }}</p>
+                </div>
+            `
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                header: 'default header',
+                firstName: 'default name',
+                age: 'default age'
+            },
+            methods: {
+                updateProps() {
+                    this.header = 'Wizytówka';
+                    this.firstName = 'Jan Nowak';
+                    this.age = '23';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

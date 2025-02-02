@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        div {
+            background-color: gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>01.Forms</h1>
+    <div id="app">
+        <form action="/aaa" method="POST" @reset="reset" @submit="submit">
+            <input type="text" v-model="text">
+            <button v-model="reset" type="reset">zresetuj</button>
+            <button v-model="submit" type="submit">Wyślij zapytanie</button>
+            <input type="checkbox" v-model="checked" />
+        </form>
+    </div>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    checked: false
+                }
+            },
+            methods: {
+
+                reset(e) {
+                    if (this.checked) {
+                        e.preventDefault();
+                        console.log("formularz się nie resetuje")
+                    } else {
+                        console.log("resetuje");
+                    }
+
+                },
+                submit(e) {
+                    if (this.checked) {
+                        e.preventDefault();
+                        console.log("formularz się nie wysyła")
+                    } else {
+                        console.log("wysyła");
+                    }
+
+                },
+                checked(e) {
+                    console.log(e.target.value);
+                }
+
+            }
+
+        }).mount("#app")
+    </script>
+</body>
+
+</html>

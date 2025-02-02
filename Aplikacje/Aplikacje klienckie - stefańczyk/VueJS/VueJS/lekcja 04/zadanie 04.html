@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transform Text</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        #app {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .word {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .letter {
+            background-color: #ddd;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h2>Transform Text</h2>
+        <input v-model="textInput" placeholder="Wpisz tekst..." @input="splitText">
+        <div v-for="(word, index) in wordsArray" :key="index" class="word">
+            <div v-for="(letter, i) in word" :key="i" class="letter">{{ letter }}</div>
+        </div>
+    </div>
+
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    textInput: '',
+                    wordsArray: []
+                };
+            },
+            methods: {
+                splitText() {
+                    this.wordsArray = this.textInput.split(' ').map(word => word.split(''));
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+
+</html>

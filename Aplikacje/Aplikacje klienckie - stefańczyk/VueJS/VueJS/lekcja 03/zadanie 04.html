@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Button Grid</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <style>
+        .button-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            width: 50px;
+            height: 50px;
+        }
+
+        button.niebieskie {
+            background-color: blue;
+            color: white;
+        }
+
+        button:disabled {
+            background-color: lightgray;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <select v-model="selectedValue">
+            <option value="">Wybierz liczbę</option>
+            <option v-for="value in uniqueValues" :key="value" :value="value">{{ value }}</option>
+        </select>
+        <div class="button-grid">
+            <div v-for="(row, rowIndex) in array" :key="rowIndex" class="row">
+                <button v-for="(value, colIndex) in row" :key="`${rowIndex}-${colIndex}`"
+                    :class="makeButtonClass(value)" :disabled="makeDisabledAttr(value)"
+                    @click="handleButtonClick(value)">
+                    {{ value }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    array: [
+                        [1, 2, 3, 3, 3],
+                        [4, 4, 4, 7, 1],
+                        [2, 3, 3, 2, 1],
+                        [5, 5, 6, 4, 3],
+                        [1, 5, 1, 2, 5],
+                    ],
+                    selectedValue: "",
+                };
+            },
+            computed: {
+                uniqueValues() {
+                    return [...new Set(this.array.flat())].sort((a, b) => a - b);
+                },
+            },
+            methods: {
+                makeButtonClass(value) {
+                    return {
+                        niebieskie: value === this.selectedValue,
+                    };
+                },
+                makeDisabledAttr(value) {
+                    return value !== this.selectedValue;
+                },
+                handleButtonClick(value) {
+                    if (value === this.selectedValue) {
+                        alert(`Kliknięto: ${value}`);
+                    }
+                },
+            },
+        });
+    </script>
+</body>
+
+</html>

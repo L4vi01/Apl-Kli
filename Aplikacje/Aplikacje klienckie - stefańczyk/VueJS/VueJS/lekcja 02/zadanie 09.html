@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Array Display</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        .red {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            margin: 5px;
+            width: 400px;
+            height: 400px;
+        }
+
+        .blue {
+            background-color: blue;
+            color: yellow;
+            padding: 10px;
+            margin: 5px;
+            width: 400px;
+            height: 400px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div v-for="item in array" :key="item.id" :class="[item.class, isVisible(item.id) ? '' : 'hidden']">
+            Item {{ item.id }}
+        </div>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    array: [
+                        { id: 1, class: "red" },
+                        { id: 2, class: "blue" },
+                        { id: 3, class: "red" },
+                        { id: 4, class: "blue" },
+                        { id: 5, class: "red" }
+                    ],
+                    currentSecond: 0,
+                    interval: false,
+                };
+            },
+            methods: {
+                start() {
+                    if (!this.interval) {
+                        this.interval = setInterval(() => {
+                            this.currentSecond = (this.currentSecond + 1) % this.array.length;
+                        }, 1000);
+                    }
+                },
+                stop() {
+                    if (this.interval) {
+                        clearInterval(this.interval);
+                        this.interval = false;
+                    }
+                },
+                isVisible(id) {
+                    return (id - 1) === this.currentSecond;
+                }
+            }
+        }).mount("#app");
+
+        window.app = app;
+    </script>
+</body>
+
+</html>

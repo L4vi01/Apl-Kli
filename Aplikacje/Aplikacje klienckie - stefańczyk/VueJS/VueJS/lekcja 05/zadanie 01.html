@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="../../css/lessons.css" />
+  <script>
+    const ItemsComponent = {
+      template: "<h3 class='card'>Items</h3>",
+    };
+
+    const TitleComponent = {
+      template: "<h3 class='card bg-red'>ChangeTitleComponent</h3>",
+    };
+
+    const AddItemComponent = {
+      template: "<h3 class='card bg-green'>AddItemComponent</h3>",
+    };
+
+    let app;
+    function init() {
+      app = Vue.createApp({
+        data() {
+          return {
+            title: "Components",
+          };
+        },
+        methods: {},
+        components: {
+          "items-component": ItemsComponent,
+          "title-component": TitleComponent,
+          "item-component": AddItemComponent,
+        },
+      }).mount("#app");
+    }
+  </script>
+</head>
+
+<body onload="init()">
+  <div id="app">
+    <items-component></items-component>
+    <items-component></items-component>
+    <items-component></items-component>
+    <title-component></title-component>
+    <item-component></item-component>
+  </div>
+</body>
+
+</html>

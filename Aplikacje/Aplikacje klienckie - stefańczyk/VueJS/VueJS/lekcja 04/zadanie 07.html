@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zadanie - Forms</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .container div {
+            margin: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>07. Zadanie - Forms</h1>
+    <p>post json to server</p>
+
+    <div class="container">
+        <div>
+            <h3>Akcesoria</h3>
+            <div id="products"></div>
+        </div>
+        <div>
+            <h3>Forma odbioru</h3>
+            <select id="delivery-select">
+                <option value="" disabled selected>Wybierz opcję dostawy</option>
+            </select>
+        </div>
+        <div>
+            <h3>Potwierdzenie</h3>
+            <div>
+                <input type="checkbox" id="confirmation" />
+                <label for="confirmation">Potwierdzam zgodność danych podanych w formularzu kontaktowym</label>
+            </div>
+            <button id="submit-btn" disabled>Wyślij</button>
+        </div>
+    </div>
+
+    <!-- Templates -->
+    <template id="product-template">
+        <div>
+            <input type="checkbox" id="product-name" />
+            <label for="product-name">product-name</label>
+            <span>(price currency)</span>
+        </div>
+    </template>
+
+    <script>
+        const products = [
+            { name: "Bluza", checked: 'nie', price: 300, currency: "PLN" },
+            { name: "Kurtka", checked: 'nie', price: 500, currency: "GBP" },
+            { name: "T-Shirt", checked: 'nie', price: 100, currency: "PLN" },
+            { name: "Koszula", checked: 'nie', price: 200, currency: "GBP" },
+            { name: "Plecak", checked: 'nie', price: 150, currency: "USD" }
+        ];
+
+        const deliveryOptions = [
+            { option: "Kurier DPD" },
+            { option: "InPOST" },
+            { option: "Paczkomaty" },
+            { option: "Poczta Polska" },
+            { option: "Osobiście" }
+        ];
+
+        // Przetwarzanie walut na pełne nazwy
+        function convertCurrency(currency) {
+            const currencyMap = {
+                PLN: "ZŁOTYCH",
+                GBP: "FUNTÓW",
+                USD: "DOLARÓW"
+            };
+            return currencyMap[currency] || currency;
+        }
+
+        // Generowanie produktów
+        function generateProducts() {
+            const productTemplate = document.getElementById('product-template');
+            const productsContainer = document.getElementById('products');
+            products.forEach(product => {
+                const clone = productTemplate.content.cloneNode(true);
+                clone.querySelector('input').id = product.name;
+                clone.querySelector('label').textContent = product.name;
+                clone.querySelector('label').htmlFor = product.name;
+                clone.querySelector('span').textContent = `(${product.price} ${convertCurrency(product.currency)})`;
+                productsContainer.appendChild(clone);
+            });
+        }
+
+        // Generowanie opcji dostawy w select
+        function generateDeliveryOptions() {
+            const deliverySelect = document.getElementById('delivery-select');
+            deliveryOptions.forEach(option => {
+                const newOption = document.createElement('option');
+                newOption.value = option.option;
+                newOption.textContent = option.option;
+                deliverySelect.appendChild(newOption);
+            });
+        }
+
+        // Obsługa przycisku wysyłania
+        function enableSubmitButton() {
+            const confirmation = document.getElementById('confirmation');
+            const submitButton = document.getElementById('submit-btn');
+            confirmation.addEventListener('change', () => {
+                submitButton.disabled = !confirmation.checked;
+            });
+        }
+
+        // Wysyłanie danych na serwer
+        function submitData() {
+            const selectedProducts = products.filter(product => document.getElementById(product.name).checked);
+            const selectedDelivery = document.getElementById('delivery-select').value;
+            const confirmation = document.getElementById('confirmation').checked;
+
+            const data = {
+                selectedProducts,
+                selectedDelivery: selectedDelivery || null,
+                confirmation
+            };
+
+            // Symulacja wysyłania danych
+            console.log("Wysłane dane:", JSON.stringify(data));
+            alert("Dane zapisane na serwerze:\n" + JSON.stringify(data, null, 2));
+        }
+
+        // Inicjalizacja formularza
+        function initForm() {
+            generateProducts();
+            generateDeliveryOptions();
+            enableSubmitButton();
+            document.getElementById('submit-btn').addEventListener('click', submitData);
+        }
+
+        // Uruchomienie funkcji po załadowaniu strony
+        window.onload = initForm;
+    </script>
+
+</body>
+
+</html>

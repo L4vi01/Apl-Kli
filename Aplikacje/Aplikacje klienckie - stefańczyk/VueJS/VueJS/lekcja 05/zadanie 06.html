@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="../../css/lessons.css" />
+  <script>
+    const CardComponent = {
+      template: "#cardTemplate",
+      data() {
+        return {
+          x: this.propX,
+        };
+      },
+      props: ["propX"],
+      methods: {
+        power() {
+          this.x = Math.pow(this.x, 2);
+        },
+      },
+    };
+
+    let app;
+    function init() {
+      app = Vue.createApp({
+        data() {
+          return {
+            title: "Components",
+            digitsArray: [4, 16, 256],
+          };
+        },
+        methods: {
+          modify() { },
+        },
+        components: {
+          "card-component": CardComponent,
+        },
+      }).mount("#app");
+    }
+  </script>
+</head>
+
+<body onload="init()">
+  <template id="cardTemplate">
+    <div class="card">
+      <h3>child component</h3>
+      <p>data from parent: {{propX}}</p>
+      <p>data in component: {{this.x}}</p>
+      <pre>{{JSON.stringify(this.$props, null,5)}}</pre>
+      <button v-on:click="power">power</button>
+    </div>
+  </template>
+
+  <div id="app">
+    <div>
+      <div>
+        <card-component v-for="digit in digitsArray" v-bind:prop-x="digit"></card-component>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

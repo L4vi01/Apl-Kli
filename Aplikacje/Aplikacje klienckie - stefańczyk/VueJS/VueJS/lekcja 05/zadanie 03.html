@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="../../css/lessons.css" />
+    <script>
+      const CardComponent = {
+        template: "#cardTemplate",
+        data() {
+          return {
+            _firstname: this.fisrtname,
+            _lastname: this.lastname,
+          };
+        },
+        props: ["firstname", "lastname"],
+        methods: {},
+      };
+
+      let app;
+      function init() {
+        app = Vue.createApp({
+          data() {
+            return {
+              title: "Components",
+            };
+          },
+          methods: {},
+          components: {
+            "card-component": CardComponent,
+          },
+        }).mount("#app");
+      }
+    </script>
+  </head>
+  <body onload="init()">
+    <template id="cardTemplate">
+      <div class="card">
+        <h3>Moja wizytowka</h3>
+        <p>Imie: {{firstname ?? "nie okreslono"}}</p>
+        <p>Nazwisko: {{lastname ?? "nie okreslono"}}</p>
+        <pre>{{JSON.stringify(this.$props, null,5)}}</pre>
+      </div>
+    </template>
+
+    <div id="app">
+      <card-component lastname="Nowak"></card-component>
+      <card-component firstname="Bartosz" lastname="Nowak"></card-component>
+      <card-component firstname="Jan"></card-component>
+    </div>
+  </body>
+</html>

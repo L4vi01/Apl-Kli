@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="../../css/lessons.css" />
+    <script>
+      const CardComponent = {
+        template: "#cardTemplate",
+        data() {
+          return {};
+        },
+        props: ["name", "age"],
+        methods: {},
+      };
+
+      let app;
+      function init() {
+        app = Vue.createApp({
+          data() {
+            return {
+              title: "Components",
+              name: "default name",
+              age: "default age",
+            };
+          },
+          methods: {
+            modify() {
+              this.name = "Jan Nowak";
+              this.age = 23;
+            },
+          },
+          components: {
+            "card-component": CardComponent,
+          },
+        }).mount("#app");
+      }
+    </script>
+  </head>
+  <body onload="init()">
+    <template id="cardTemplate">
+      <div class="card">
+        <h3>Wizytowka</h3>
+        <p>imie {{this.name}}</p>
+        <p>wiek {{this.age}}</p>
+        <pre>{{JSON.stringify(this.$props, null,5)}}</pre>
+      </div>
+    </template>
+
+    <div id="app">
+      <div>
+        <button v-on:click="modify">modfy</button>
+        <div>
+          <card-component v-bind:name="name" v-bind:age="age"></card-component>
+          <card-component v-bind:name="name" v-bind:age="age"></card-component>
+          <card-component v-bind:name="name" v-bind:age="age"></card-component>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

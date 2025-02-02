@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        #całe {
+            background-color: gray;
+            width: 30vw;
+            height: 300px;
+            display: flex;
+            flex-direction: row;
+        }
+
+        label {
+            margin-bottom: 5px;
+
+        }
+
+        form {
+            display: flex;
+            flex-direction: row;
+        }
+
+
+        #prawa {
+            display: block;
+            margin-left: 30px;
+        }
+
+        label {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>01.Forms</h1>
+    <div id="app">
+        <div id="całe">
+            <form>
+                <div id="lewa">
+                    <h3>Uzupełnij dane</h3>
+                    <label> <input type="text" v-model="imie" placeholder="Imie">Długość: {{ imie.length }}</label>
+                    <label></label><input type="text" v-model="wiek" placeholder="Wiek">Długość: {{ wiek.length
+                    }}</label>
+                    <label></label><input type="text" v-model="zawód" placeholder="Zawód">Długość: {{ zawód.length
+                    }}</label>
+                    <label></label><input type="text" v-model="wynagrodzenie" placeholder="Wynagrodzenie">Długość: {{
+                    wynagrodzenie.length
+                    }}</label><br>
+                    <input type="submit" value="Wyślij" :disabled="!isReady" />
+                </div>
+                <div id="prawa">
+                    <h3>Iformacje</h3>
+                    <p>Imie: {{imie}}</p>
+                    <p>Wiek: {{wiek}}</p>
+                    <p>Zawód: {{zawód}}</p>
+                    <p>Wynagrodzenie: {{wynagrodzenie}}</p>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        Vue.createApp({
+
+
+            data() {
+                return {
+                    imie: '',
+                    wiek: '',
+                    zawód: '',
+                    wynagrodzenie: '',
+                }
+
+            },
+            computed: {
+
+                isReady() {
+                    if (this.imie.length && this.wiek.length && this.zawód.length && this.wynagrodzenie.length) {
+                        return true
+                    } else {
+                        return false
+                    }
+
+                }
+            },
+            methods: {
+
+
+
+            }
+
+        }).mount("#app")
+    </script>
+</body>
+
+</html>

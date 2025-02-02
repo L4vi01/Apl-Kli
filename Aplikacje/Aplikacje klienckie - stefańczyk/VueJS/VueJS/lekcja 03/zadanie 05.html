@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <table v-if="products.length>0">
+            <th>
+            <td>lp</td>
+            <td>produkt</td>
+            <td>cena</td>
+            <td>koszyk</td>
+            </th>
+            <tr v-for="(item,x) of products">
+                <td>{{x +1}}</td>
+                <td>{{item.product}}</td>
+                <td>{{item.price}}</td>
+                <td @click="addToCart(x)">{{item.selected}}</td>
+
+            </tr>
+
+        </table>
+        <p v-else>brak produktów</p>
+
+    </div>
+    <script>
+        const app = Vue.createApp({
+
+
+            data() {
+                return {
+                    products: [
+                        { product: "książka", price: 100, selected: "dodaj do koszyka" },
+                        { product: "płyta CD", price: 200, selected: "dodaj do koszyka" },
+                        { product: "mleko", price: 300, selected: "dodaj do koszyka" },
+                        { product: "buty", price: 400, selected: "dodaj do koszyka" },
+                    ],
+                    item: {},
+
+                }
+
+            },
+            methods: {
+                addToCart(index) {
+                    const item = this.products[index];
+                    if (item.selected === "dodaj do koszyka") {
+                        item.selected = "w koszyku";
+                    } else {
+                        item.selected = "dodaj do koszyka";
+                    }
+                }
+            }
+
+        }).mount("#app")
+        window.app = app;
+    </script>
+</body>
+
+</html>

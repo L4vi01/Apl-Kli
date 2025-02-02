@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    .karta-samochodu {
+      padding: 20px;
+      margin: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    .stary-samochod {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+
+    .nowy-samochod {
+      background-color: #333;
+      color: #fff;
+    }
+
+    .karta-samochodu img {
+      width: 200px;
+      height: 100px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div v-for="samochod in samochody" :key="samochod.id" :class="produkcjaSamochodu(samochod)" class="karta-samochodu">
+      <h2>{{ daneSamochodu(samochod) }}</h2>
+      <img :src="obrazSamochodu(samochod)" alt="Obraz Samochodu" />
+    </div>
+  </div>
+
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          samochody: [
+            { id: 1, model: 'BMW 3', typ: 'Sedan', rok: 1995 },
+            { id: 2, model: 'Audi A4', typ: 'Hatchback', rok: 2005 },
+            { id: 3, model: 'Volkswagen Golf', typ: 'Hatchback', rok: 2015 },
+            { id: 4, model: 'Ford Mustang', typ: 'Coupe', rok: 1985 }
+          ]
+        };
+      },
+      methods: {
+        daneSamochodu(samochod) {
+          return `${samochod.model}-${samochod.typ}-${samochod.rok}`;
+        },
+        obrazSamochodu(samochod) {
+          return `car-${samochod.id}.png`; // Upewnij się, że pliki istnieją
+        },
+        produkcjaSamochodu(samochod) {
+          return samochod.rok < 2000 ? 'stary-samochod' : 'nowy-samochod';
+        }
+      }
+    }).mount("#app");
+  </script>
+</body>
+
+</html>

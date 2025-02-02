@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Class Example</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        #cos {
+            width: 500px;
+            height: 500px;
+            font-size: large;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .red {
+            background-color: red;
+            color: white;
+        }
+
+        .blue {
+            background-color: blue;
+            color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div id="cos" :class="currentClass">{{ value }}</div>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    value: 0,
+                    interval: false,
+                };
+            },
+            computed: {
+                currentClass() {
+                    return this.value % 2 === 0 ? 'red' : 'blue';
+                }
+            },
+            methods: {
+                start() {
+                    if (!this.interval) {
+                        this.interval = setInterval(() => {
+                            this.value++;
+                        }, 2000);
+                    }
+                },
+                stop() {
+                    clearInterval(this.interval);
+                    this.interval = false;
+                }
+            }
+        }).mount("#app");
+
+        window.app = app;
+    </script>
+</body>
+
+</html>

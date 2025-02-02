@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="../../css/lessons.css" />
+    <script>
+      const CardComponent = {
+        template: "#cardTemplate",
+        data() {
+          return {};
+        },
+        props: ["propX"],
+        methods: {},
+      };
+
+      let app;
+      function init() {
+        app = Vue.createApp({
+          data() {
+            return {
+              title: "Components",
+              x: 2,
+            };
+          },
+          methods: {
+            modify() {
+              this.x = Math.pow(this.x, 2);
+            },
+          },
+          components: {
+            "card-component": CardComponent,
+          },
+        }).mount("#app");
+      }
+    </script>
+  </head>
+  <body onload="init()">
+    <template id="cardTemplate">
+      <div class="card">
+        <h3>Child component</h3>
+        <p>{{this.propX}}</p>
+      </div>
+    </template>
+
+    <div id="app">
+      <button v-on:click="modify">power</button>
+      <div>
+        <card-component v-bind:prop-x="x"></card-component>
+        <card-component v-bind:prop-x="x"></card-component>
+        <card-component v-bind:prop-x="x"></card-component>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="../../css/lessons.css" />
+    <script>
+      const CardComponent = {
+        template: "#cardTemplate",
+        data() {
+          return {
+            funcProp: this.funcProp,
+            x: parseInt(this.propX),
+          };
+        },
+        props: ["func-prop", "propX"],
+        methods: {
+          add() {
+            this.x += 1;
+          },
+        },
+      };
+
+      let app;
+      function init() {
+        app = Vue.createApp({
+          data() {
+            return {
+              title: "Components",
+              val: 0,
+              items: [
+                { id: 1, val: 1111 },
+                { id: 2, val: 2222 },
+                { id: 3, val: 3333 },
+              ],
+            };
+          },
+          methods: {
+            modify(x) {
+              this.val += x;
+            },
+          },
+          components: {
+            "card-component": CardComponent,
+          },
+        }).mount("#app");
+      }
+    </script>
+  </head>
+  <body onload="init()">
+    <template id="cardTemplate">
+      <div class="card">
+        <h3>child component</h3>
+        <p>{{x}}</p>
+        <button @click="add()">add</button>
+        <button @click="funcProp(x)">send</button>
+      </div>
+    </template>
+
+    <div id="app">
+      <div>
+        <p>{{val}}</p>
+        <div>
+          <card-component
+            v-for="item in items"
+            v-bind:func-prop="modify"
+            v-bind:prop-x="item.val"
+          ></card-component>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

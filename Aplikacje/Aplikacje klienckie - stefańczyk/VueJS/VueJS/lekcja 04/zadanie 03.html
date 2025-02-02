@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        h1 {
+            color: red;
+        }
+
+        form {
+            background-color: #e6e6e6;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #lewa,
+        #prawa {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        label {
+            margin-bottom: 10px;
+        }
+
+        select {
+            margin-top: 10px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: blue;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: grey;
+            cursor: not-allowed;
+        }
+
+        p {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>03. Forms</h1>
+    <p>koszyk: form - checkbox, radio, select → v-model</p>
+    <div id="app">
+        <form>
+            <!-- Akcesoria -->
+            <div id="lewa">
+                <h3>Akcesoria</h3>
+                <label><input type="checkbox" v-model="mysz" true-value="tak" false-value="nie" /> Myszka</label>
+                <label><input type="checkbox" v-model="laptop" true-value="tak" false-value="nie" /> Laptop</label>
+                <label><input type="checkbox" v-model="komputer_stacjonarny" true-value="tak" false-value="nie" />
+                    Komputer stacjonarny</label>
+            </div>
+
+            <!-- Forma odbioru -->
+            <div>
+                <h3>Forma odbioru</h3>
+                <label><input type="radio" v-model="dostawa" value="Kurier" /> Kurier</label>
+                <label><input type="radio" v-model="dostawa" value="Poczta" /> Poczta</label>
+                <label><input type="radio" v-model="dostawa" value="Osobiście" /> Osobiście</label>
+                <select v-model="dostawa">
+                    <option value="Kurier">Kurier</option>
+                    <option value="Poczta">Poczta</option>
+                    <option value="Osobiście">Osobiście</option>
+                </select>
+                <p>Sposób dostawy: {{ dostawa }}</p>
+            </div>
+
+            <!-- Potwierdzenie -->
+            <div id="prawa">
+                <h3>Potwierdzenie</h3>
+                <label><input type="checkbox" v-model="potwierdzenie" /> Potwierdzam zgodność danych podanych w
+                    formularzu kontaktowym</label>
+                <p>{{ potwierdzenie }}</p>
+                <button :disabled="!canSubmit" type="submit">Wyślij</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    mysz: false,
+                    laptop: false,
+                    komputer_stacjonarny: false,
+                    dostawa: null,
+                    potwierdzenie: false
+                };
+            },
+            computed: {
+                canSubmit() {
+                    // Warunek aktywacji przycisku "Wyślij"
+                    return (
+                        (this.mysz === "tak" || this.laptop === "tak" || this.komputer_stacjonarny === "tak") &&
+                        this.dostawa &&
+                        this.potwierdzenie
+                    );
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+
+</html>

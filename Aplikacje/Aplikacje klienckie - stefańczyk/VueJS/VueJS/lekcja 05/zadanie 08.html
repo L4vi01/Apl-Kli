@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="../../css/lessons.css" />
+    <script>
+      const CardComponent = {
+        template: "#cardTemplate",
+        data() {
+          return {
+            funcProp: this.funcProp,
+          };
+        },
+        props: ["func-prop"],
+        methods: {},
+      };
+
+      let app;
+      function init() {
+        app = Vue.createApp({
+          data() {
+            return {
+              title: "Components",
+
+              val: 0,
+            };
+          },
+          methods: {
+            modify(x) {
+              this.val += x;
+            },
+          },
+          components: {
+            "card-component": CardComponent,
+          },
+        }).mount("#app");
+      }
+    </script>
+  </head>
+  <body onload="init()">
+    <template id="cardTemplate">
+      <div class="card">
+        <h3>child component</h3>
+        <button @click="funcProp(111)">111</button>
+        <button @click="funcProp(222)">222</button>
+        <button @click="funcProp(333)">333</button>
+      </div>
+    </template>
+
+    <div id="app">
+      <div>
+        <p>{{val}}</p>
+        <div>
+          <card-component v-bind:func-prop="modify"></card-component>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
