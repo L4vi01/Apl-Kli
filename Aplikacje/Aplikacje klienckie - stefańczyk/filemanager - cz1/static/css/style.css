@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+#nav {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px dashed #3b3486;
+}
+
+.linki-nav {
+    color: #3b3486;
+    margin: 30px;
+    font-size: 20px;
+    text-decoration: underline;
+    font-style: oblique;
+}
+
+#upload-section {
+    display: flex;
+    width: 500px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#side {
+    width: fit-content;
+    border-right: 2px dashed #2c3e50;
+    padding: 10px;
+    display: flex;
+    font-weight: bold;
+    height: 100vh;
+    flex-direction: column;
+    text-align: center;
+    justify-content: top;
+}
+
+#side p {
+    margin-top: -1px;
+    margin-bottom: 1px;
+    color: #3b3486;
+}
+
+.delete-all-button {
+    width: 100px;
+    background: #3b3486;
+    border-radius: 10px;
+    color: white;
+    padding: 5px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.upload-right {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+}
+
+.file-upload {
+    display: block;
+    border: 2px dashed #2c3e50;
+    padding: 15px;
+    cursor: pointer;
+    background: #f5f8fa;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.file-upload input {
+    display: none;
+}
+
+.file-upload span {
+    margin-top: 15px;
+    padding: 8px 20px;
+    border: none;
+    background: #3498db;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.upload-button {
+    margin-top: 15px;
+    padding: 8px 20px;
+    border: none;
+    background: #3498db;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.upload-button:hover {
+    background: #2980b9;
+}
+
+.filemanager-section {
+    display: flex;
+    width: 100%;
+}
+
+.filemanager-section th {
+    height: 30px;
+    padding: 10px;
+    border-bottom: 2px dashed #3b3486;
+    color: #3b3486;
+    text-align: center;
+}
+
+.file-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.filemanager-section td {
+    color: #3b3486;
+    text-align: center;
+    height: auto;
+    vertical-align: top;
+}
+
+.file-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.action-button {
+    height: 15px;
+    background: #3b3486;
+    border-radius: 10px;
+    color: white;
+    padding: 5px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#info-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}

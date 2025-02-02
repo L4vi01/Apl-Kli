@@ -1,0 +1,37 @@
+<div class="filemanager-section">
+    <div id="side">
+        <p>filemanager</p>
+        </br>
+        <a href="/deleteAll" class="delete-all-button">remove file data form array</a>
+    </div>
+    <table class="file-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Icon</th>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Type</th>
+                <th>*</th>
+                <th>*</th>
+                <th>*</th>
+                <th>*</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each allFiles}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td><img class="file-icon" src="/gfx/{{this.icon}}" alt="Icon"></td>
+                <td>{{this.name}}</td>
+                <td>{{this.size}}</td>
+                <td>{{this.type}}</td>
+                <td><a href="/show?id={{this.id}}" class="action-button">Show</a></td>
+                <td><a href="/info?id={{this.id}}" class="action-button">Info</a></td>
+                <td><a href="/download?id={{this.id}}" class="action-button">Download</a></td>
+                <td><a href="/delete?id={{this.id}}" class="action-button">Delete</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
