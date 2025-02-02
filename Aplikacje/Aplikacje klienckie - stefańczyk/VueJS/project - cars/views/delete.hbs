@@ -1,0 +1,52 @@
+<div>
+    <h1>
+        delete cars page
+    </h1>
+    <form action="/delAll" method="POST" onsubmit="return confirm('confirm delete all cars')">
+        <button type="submit" class="btn btn-danger" id="del">DELETE ALL CARS</button>
+    </form>
+    <form method="POST">
+        <button type="submit" class="btn btn-secondary" id="del" formaction="/delSel">DELETE SELECTED</button>
+        {{#if num}}
+        <div id="selectedcars">
+            removed {{num}} cars
+        </div>
+        {{/if}}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">_id</th>
+                    <th scope="col">ubezpieczony</th>
+                    <th scope="col">benzyna</th>
+                    <th scope="col">uszkodzony</th>
+                    <th scope="col">naped4x4</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each Doc}}
+                <tr>
+                    <td>{{this._id}}</td>
+                    <td>{{this.ubezpieczony}}</td>
+                    <td>{{this.benzyna}}</td>
+                    <td>{{this.uszkodzony}}</td>
+                    <td>{{this.naped}}</td>
+                    <td>
+                        <button type="submit" formaction="/delBtn" name="btn" value="{{this._id}}"
+                            class="btn btn-danger">DELETE</button>
+                    </td>
+                    <td>
+                        <div class="form-check">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="selCars"
+                                    value="{{this._id}}">
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </form>
+</div>
