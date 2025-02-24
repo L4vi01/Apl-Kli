@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        #board {
+            display: grid;
+            grid-template-columns: repeat(15, 32px);
+            grid-template-rows: repeat(15, 32px);
+            gap: 1px;
+        }
+
+        .cell {
+            width: 32px;
+            height: 32px;
+            background-color: #333;
+            background-image: url('snake.png');
+            background-position: 0 -64px;
+            background-size: 160px 128px;
+        }
+
+        .snake-head-up {
+            background-position: -96px 0;
+        }
+
+        .snake-head-down {
+            background-position: -128px -32px;
+        }
+
+        .snake-head-left {
+            background-position: -96px -32px;
+        }
+
+        .snake-head-right {
+            background-position: -128px 0;
+        }
+
+        .snake-body-horizontal {
+            background-position: -32px 0;
+        }
+
+        .snake-body-vertical {
+            background-position: -64px -32px;
+        }
+
+        .snake-tail-up {
+            background-position: -96px -64px;
+        }
+
+        .snake-tail-down {
+            background-position: -128px -96px;
+        }
+
+        .snake-tail-left {
+            background-position: -96px -96px;
+        }
+
+        .snake-tail-right {
+            background-position: -128px -64px;
+        }
+
+        .snake-right-corner-up {
+            background-position: -64px 0px;
+        }
+
+        .snake-right-corner-down {
+            background-position: 0px -32px;
+        }
+
+        .snake-left-corner-up {
+            background-position: 0px 0px;
+        }
+
+        .snake-left-corner-down {
+            background-position: -64px -64px;
+        }
+
+        .food {
+            background-position: 0px -96px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Snake Game</h1>
+    <button onclick="startGame()">Start Game</button>
+    <div id="board"></div>
+    <script>
+        const board = document.getElementById('board');
+        const cols = 15;
+        const rows = 15;
+        const cells = [];
+        let snake = [
+            { x: 6, y: 8 },
+            { x: 5, y: 8 },
+            { x: 4, y: 8 }
+        ];
+        let dir = 'RIGHT';
+        let food = { x: Math.floor(Math.random() * cols), y: Math.floor(Math.random() * rows) };
+        let game;
+
+        function startGame() {
+            board.innerHTML = '';
+            cells.length = 0;
+            for (let i = 0; i < cols * rows; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                board.appendChild(cell);
+                cells.push(cell);
+            }
+            snake
+            dir
+            food = { x: Math.floor(Math.random() * cols), y: Math.floor(Math.random() * rows) };
+            clearInterval(game);
+            game = setInterval(gameLoop, 150);
+        }
+
+
+        document.addEventListener('keydown', (e) => {
+            if (e.keyCode == 37 && dir != 'RIGHT') dir = 'LEFT';
+            if (e.keyCode == 38 && dir != 'DOWN') dir = 'UP';
+            if (e.keyCode == 39 && dir != 'LEFT') dir = 'RIGHT';
+            if (e.keyCode == 40 && dir != 'UP') dir = 'DOWN';
+        });
+
+        function gameLoop() {
+            const head = { ...snake[0] };
+            if (dir == 'LEFT') head.x -= 1;
+            if (dir == 'UP') head.y -= 1;
+            if (dir == 'RIGHT') head.x += 1;
+            if (dir == 'DOWN') head.y += 1;
+
+            if (head.x == food.x && head.y == food.y) {
+                food = { x: Math.floor(Math.random() * cols), y: Math.floor(Math.random() * rows) };
+            } else {
+                snake.pop();
+            }
+
+            if (head.x < 0 || head.y < 0 || head.x >= cols || head.y >= rows || snake.some(s => s.x == head.x && s.y == head.y)) {
+                clearInterval(game);
+                alert('Game Over');
+                return;
+            }
+
+            snake.unshift(head);
+            cells.forEach(cell => cell.className = 'cell');
+
+            snake.forEach((s, index) => {
+                const cellIndex = s.y * cols + s.x;
+                if (index === 0) {
+                    cells[cellIndex].classList.add(`snake-head-${dir.toLowerCase()}`);
+                } else if (index === snake.length - 1) {
+                    const tailDir = getTailDirection(snake[index - 1], s);
+                    cells[cellIndex].classList.add(`snake-tail-${tailDir.toLowerCase()}`);
+                } else {
+                    const prev = snake[index - 1];
+                    const next = snake[index + 1];
+                    if (prev.x === next.x) {
+                        cells[cellIndex].classList.add('snake-body-vertical');
+                    } else if (prev.y === next.y) {
+                        cells[cellIndex].classList.add('snake-body-horizontal');
+                    } else {
+                        if ((prev.x < s.x && next.y < s.y) || (prev.y < s.y && next.x < s.x)) {
+                            cells[cellIndex].classList.add('snake-left-corner-down');
+                        } else if ((prev.x < s.x && next.y > s.y) || (prev.y > s.y && next.x < s.x)) {
+                            cells[cellIndex].classList.add('snake-right-corner-up');
+                        } else if ((prev.x > s.x && next.y < s.y) || (prev.y < s.y && next.x > s.x)) {
+                            cells[cellIndex].classList.add('snake-right-corner-down');
+                        } else if ((prev.x > s.x && next.y > s.y) || (prev.y > s.y && next.x > s.x)) {
+                            cells[cellIndex].classList.add('snake-left-corner-up');
+                        }
+                    }
+                }
+            });
+
+            cells[food.y * cols + food.x].classList.add('food');
+        }
+
+        function getTailDirection(prev, tail) {
+            if (prev.x < tail.x) return 'LEFT';
+            if (prev.x > tail.x) return 'RIGHT';
+            if (prev.y < tail.y) return 'UP';
+            if (prev.y > tail.y) return 'DOWN';
+        }
+    </script>
+</body>
+
+</html>
