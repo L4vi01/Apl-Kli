@@ -1,0 +1,18 @@
+{X} [1p] dzielnie grafiki "na części" (w zależności od klikniętego buttona 3x3 itd.- dla każdego trybu gry):
+	 obrazek pocięty umieszczony w "puzzlach" (z losowością jeśli nie robisz "rozkładania")
+
+{X} [0.5p] slider w JS'ie(!) (minimum 3 obrazki, zapętlony)
+
+W oparciu o Storage dodaj możliwość:
+{ } [0.5p] zapisania trzech ostatnich stanów gry (wraz z czasem)
+{ } [1p] załadowania wybranego zapisanego stanu na dowolnym etapie aktualnej gry przy czym:
+		- wymuś akceptację załadowania po pokazaniu miniatury ładowanej gry (czas, stan puzzli)
+
+UWAGA: kolejne podpunkty muszą działać dla każdego z trybów
+(max 1p) przesuwanie:
+	{X} [0.5p] zamiana któregokolwiek klikniętego elementu z pustym
+	{X} [1p] w pełni działająca zamiana (tylko z sąsiadem) [zaznacz powyzszą fajkę jesli masz to]
+{X} [1p] czas gry oparty na Date z zakończeniem (co "1ms", graficzny, startuje po "rozłożeniu"/wylosowaniu, po wygranej zgodny z tym wyświetlonym w informacji)
+{X} [1p] zapewnienie wygranej ("rozkładanie" obrazka), musi być widoczne
+
+SUMA: 4.5p

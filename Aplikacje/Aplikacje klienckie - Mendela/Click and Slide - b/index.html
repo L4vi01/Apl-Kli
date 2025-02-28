@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click & Slide Puzzle</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div class="game-container">
+        <div class="slider">
+            <button class="arrow left" onclick="prevImage()">&#9664;</button>
+            <img id="preview" src="assets/images/puzzle1.jpg" alt="Preview">
+            <button class="arrow right" onclick="nextImage()">&#9654;</button>
+        </div>
+        <div class="controls">
+            <button onclick="startGame(3)">3 x 3</button>
+            <button onclick="startGame(4)">4 x 4</button>
+            <button onclick="startGame(5)">5 x 5</button>
+            <button onclick="startGame(6)">6 x 6</button>
+        </div>
+        <div id="timer"></div>
+        <div id="game-board"></div>
+    </div>
+    <div id="win-overlay" class="overlay">
+        <div class="overlay-content">
+            <h2>Wygrana!</h2>
+            <p>Czas gry: <span id="win-time"></span></p>
+            <button onclick="closeOverlay()">OK</button>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
