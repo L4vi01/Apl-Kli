@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle Przesuwanka</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div class="kontener-gry">
+        <div class="przesuwak">
+            <button class="strzalka lewa" onclick="poprzedniObraz()">&#9664;</button>
+            <img id="podglad" src="assets/images/puzzle1.jpg" alt="Podgląd">
+            <button class="strzalka prawa" onclick="nastepnyObraz()">&#9654;</button>
+        </div>
+        <div class="przyciski">
+            <button onclick="rozpocznijGre(3)">3 x 3</button>
+            <button onclick="rozpocznijGre(4)">4 x 4</button>
+            <button onclick="rozpocznijGre(5)">5 x 5</button>
+            <button onclick="rozpocznijGre(6)">6 x 6</button>
+        </div>
+        <div id="czasomierz"></div>
+        <div id="plansza-gry"></div>
+        <div id="zapisane-stany">
+            <h3>Zapisane stany</h3>
+            <ul id="lista-zapisanych-stanow"></ul>
+        </div>
+        <button onclick="zapiszStanGry()">Zapisz grę</button>
+    </div>
+    <div id="overlay-wygrana" class="overlay">
+        <div class="zawartosc-overlay">
+            <h2>Wygrana!</h2>
+            <p>Czas gry: <span id="czas-wygranej"></span></p>
+            <button onclick="zamknijOverlay()">OK</button>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
