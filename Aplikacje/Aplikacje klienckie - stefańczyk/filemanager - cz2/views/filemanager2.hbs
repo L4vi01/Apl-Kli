@@ -1,0 +1,50 @@
+<div class="filemanager-header">
+    <h1>filemanager cz.2 - file system cz.1</h1>
+</div>
+<div class="filemanager-section">
+    <div class="filemanager-sidebar">
+        <form action="/create-directory" method="post">
+            <input type="text" name="dirName" placeholder="Nazwa katalogu" required>
+            <button type="submit">Utwórz katalog</button>
+        </form>
+
+        <form action="/create-file" method="post">
+            <input type="text" name="fileName" placeholder="Nazwa pliku" required>
+            <button type="submit">Utwórz plik</button>
+        </form>
+
+        <form action="/upload-file" method="post" enctype="multipart/form-data">
+            <input type="file" name="filetoupload" multiple>
+            <button type="submit">Prześlij pliki</button>
+        </form>
+    </div>
+
+    <div class="filemanager-content">
+        <div class="folders-section">
+            <h2>Katalogi</h2>
+            <div class="file-list">
+                {{#each files}}
+                {{#if (isDirectory this)}}
+                <div class="file-item">
+                    <span>{{this}}</span>
+                    <a href="/delete-directory?dirName={{this}}" class="delete-button">Usuń</a>
+                </div>
+                {{/if}}
+                {{/each}}
+            </div>
+        </div>
+        <div class="files-section">
+            <h2>Pliki</h2>
+            <div class="file-list">
+                {{#each files}}
+                {{#unless (isDirectory this)}}
+                <div class="file-item">
+                    <span>{{this}}</span>
+                    <a href="/delete-file?fileName={{this}}" class="delete-button">Usuń</a>
+                </div>
+                {{/unless}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
