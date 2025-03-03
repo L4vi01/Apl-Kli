@@ -1,0 +1,117 @@
+<div class="filemanager-header">
+    <h1>filemanager cz.3</h1>
+</div>
+<div class="breadcrumbs">
+    <a href="/filemanager3">home</a>
+    {{#each pathArray}}
+    <span> / </span>
+    <a href="/filemanager3?root={{path}}">{{name}}</a>
+    {{/each}}
+</div>
+<div class="filemanager-section">
+    <div class="filemanager-sidebar">
+
+        <button onclick="createFolder()">new folder</button>
+        <dialog id="createFolder">
+            <form action="/create-directory" method="post">
+                <input type="hidden" name="root" value="{{root}}" />
+                <input type="text" name="dirName" placeholder="Nazwa katalogu" required>
+                <button type="submit">create</button>
+                <button type="button" onclick="closeCreateFolder()">cancel</button>
+            </form>
+        </dialog>
+
+        <br>
+
+        <button onclick="renameDirectory()">rename folder</button>
+        <dialog id="renameFolder">
+            <form action="/rename-directory" method="post">
+                <input type="hidden" name="root" value="{{root}}" />
+                <input type="text" name="oldName" placeholder="Stara nazwa katalogu" required>
+                <input type="text" name="newName" placeholder="Nowa nazwa katalogu" required>
+                <button type="submit">rename</button>
+                <button type="button" onclick="closeRenameFolder()">cancel</button>
+            </form>
+        </dialog>
+
+        <br>
+
+        <button onclick="createFile()">new file</button>
+        <dialog id="createFile">
+            <form action="/create-file" method="post">
+                <input type="hidden" name="root" value="{{root}}" />
+                <input type="text" name="fileName" placeholder="Nazwa pliku" required>
+                <button type="submit">create</button>
+                <button type="button" onclick="closeCreateFile()">cancel</button>
+            </form>
+        </dialog>
+
+        <form action="/upload-file" method="post" enctype="multipart/form-data" class="file-upload-wrapper">
+            <input type="hidden" name="root" value="{{root}}" />
+            <label for="filetoupload" class="custom-file-upload">
+                Choose files
+            </label>
+            <input id="filetoupload" type="file" name="filetoupload" multiple onchange="updateFileName()">
+            <span id="file-name" class="file-upload-filename">No file chosen</span>
+            <button type="submit">send files</button>
+        </form>
+    </div>
+
+    <div class="filemanager-content">
+        <div class="folders-section">
+            <h2>Katalogi</h2>
+            <div class="file-list">
+                {{#each files}}
+                {{#if (isDirectory this)}}
+                <div class="file-item">
+                    <img src="/static/gfx/iconfolder.png" alt="Folder Icon" class="file-icon">
+                    <a href="/filemanager3?root={{../root}}/{{this}}">{{this}}</a>
+                    <a href="/delete-directory?root={{../root}}&dirName={{this}}" class="delete-button">Usuń</a>
+                </div>
+                {{/if}}
+                {{/each}}
+            </div>
+        </div>
+        <div class="files-section">
+            <h2>Pliki</h2>
+            <div class="file-list">
+                {{#each files}}
+                {{#unless (isDirectory this)}}
+                <div class="file-item">
+                    <img src="/static/gfx/{{getFileIcon this}}" alt="File Icon" class="file-icon">
+                    <span>{{this}}</span>
+                    <a href="/delete-file?root={{../root}}&fileName={{this}}" class="delete-button">Usuń</a>
+                </div>
+                {{/unless}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function createFolder() {
+        document.getElementById("createFolder").showModal();
+    }
+    function closeCreateFolder() {
+        document.getElementById("createFolder").close();
+    }
+    function renameDirectory() {
+        document.getElementById("renameFolder").showModal();
+    }
+    function closeRenameFolder() {
+        document.getElementById("renameFolder").close();
+    }
+    function createFile() {
+        document.getElementById("createFile").showModal();
+    }
+    function closeCreateFile() {
+        document.getElementById("createFile").close();
+    }
+    function updateFileName() {
+        const input = document.getElementById("filetoupload");
+        const label = document.getElementById("file-name");
+        const fileName = input.files.length > 0 ? Array.from(input.files).map(file => file.name).join(', ') : 'No file chosen';
+        label.textContent = fileName;
+    }
+</script>
